@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 매퍼 네임스페이스 : 인터페이스 바인딩을 가능하게 함-->
+<mapper namespace="com.spring.hello.mapper.UserMapper">
+
+    <select id="allUsers" resultType="UserVo">
+        select *
+        from User
+    </select>
+
+    <select id="selectUser" resultType="UserVo">
+        select *
+        from User
+        where ${column} = #{value}
+    </select>
+
+    <!-- parameterType 은 생략이 가능 -->
+    <insert id="createUser" useGeneratedKeys="true" keyProperty="id">
+        insert into User
+        values (
+        #{id},
+        #{name},
+        #{username},
+        #{email},
+        #{password},
+        #{address},
+        #{phone},
+        #{website},
+        #{company}
+        )
+    </insert>
+
+    <delete id="deleteUser">
+        delete from User
+        where id = #{id}
+    </delete>
+
+</mapper>

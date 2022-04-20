@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- 매퍼 네임스페이스 : 인터페이스 바인딩을 가능하게 함-->
+<mapper namespace="com.spring.hello.UserCRUDTest">
+
+    <select id="allUsers" resultType="com.spring.hello.dto.User">
+        select *
+        from User
+    </select>
+
+    <insert id="createUser" parameterType="com.spring.hello.dto.User">
+        insert into User
+        values (
+            #{id},
+            #{name},
+            #{username},
+            #{email},
+            #{password},
+            #{address},
+            #{phone},
+            #{website},
+            #{company}
+        )
+    </insert>
+
+
+
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 매퍼 네임스페이스 : 인터페이스 바인딩을 가능하게 함-->
+<mapper namespace="com.spring.hello.mapper.PostMapper">
+
+    <resultMap id="detailedPost" type="DetailedPostVo">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="body" property="body"/>
+        <association property="user" column="userId" resultMap="userResult"/>
+        <collection property="comments" column="commentId" resultMap="commentResult"/>
+    </resultMap>
+
+    <!--포스트 맵에 들어갈 유저 결과 맵-->
+    <resultMap id="userResult" type="UserVo">
+        <id column="userId" property="id"/>     <!--id : 결과의 유일성을 식별해줄 칼럼 (중요)-->
+        <result column="name" property="name"/>
+        <result column="email" property="email"/>
+    </resultMap>
+
+    <!--포스트 맵에 들어갈 코멘트 결과 맵-->
+    <resultMap id="commentResult" type="CommentVo">
+        <id column="commentId" property="id"/>
+        <result column="commentBody" property="body"/>
+    </resultMap>
+
+    <select id="allPosts" resultMap="detailedPost">
+        SELECT post.id,
+                post.title,
+                post.body,
+                user.id as userId,
+                user.name,
+                user.email,
+                comment.id as commentId,
+                comment.body as commentBody
+        FROM Post as post
+            LEFT JOIN User as user ON post.userId = user.id
+            LEFT JOIN Comment as comment ON post.id = comment.postId
+
+    </select>
+
+</mapper>
